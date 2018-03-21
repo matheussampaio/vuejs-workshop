@@ -1,8 +1,8 @@
 <template>
   <li :class="{'nav-item': true, 'active': false}">
-    <a class="nav-link" :href="to">
+    <router-link class="nav-link" :to="to">
       {{label}}
-    </a>
+    </router-link>
   </li>
 </template>
 

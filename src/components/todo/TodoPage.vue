@@ -40,7 +40,9 @@ export default {
     return {
       name: 'Matheus',
       tasks: [
-
+        { description: 'learn vuejs', isDone: Math.random() > 0.5 ? false : true },
+        { description: '???', isDone: Math.random() > 0.5 ? false : true },
+        { description: 'conquer the world!', isDone: Math.random() > 0.5 ? false : true }
       ]
     }
   },
@@ -63,15 +65,6 @@ export default {
     completedTasks() {
       return this.tasks.filter(tasks => tasks.isDone)
     }
-  },
-  mounted() {
-    setInterval(() => {
-      this.tasks = [
-        { description: 'learn vuejs', isDone: Math.random() > 0.5 ? false : true },
-        { description: '???', isDone: Math.random() > 0.5 ? false : true },
-        { description: 'conquer the world!', isDone: Math.random() > 0.5 ? false : true },
-      ]
-    }, 5000)
   }
 }
 </script>

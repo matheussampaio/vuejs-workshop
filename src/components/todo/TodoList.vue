@@ -2,6 +2,10 @@
   <ul class="list-group">
     <li v-for="(task, index) in tasks" :key="index" class="list-group-item">
       {{ task.description }} - {{ task.isDone ? 'done' : 'pending' }}
+      <button class="btn btn-sm btn-danger float-right"
+        @click="remove(task)">
+        remove
+      </button>
       <button class="btn btn-sm btn-primary float-right"
         @click="toggle(task)">
         toggle
@@ -19,8 +23,11 @@ export default {
     }
   },
   methods: {
-    toggle(item) {
-      this.$emit('toggle', item)
+    toggle(task) {
+      this.$emit('toggle', task)
+    },
+    remove(task) {
+      this.$emit('remove', task)
     }
   }
 }
