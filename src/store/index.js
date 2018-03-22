@@ -7,7 +7,8 @@ Vue.use(Vuex)
 const store = {
   state: {
     hello: 'world',
-    movies: []
+    movies: [],
+    genres: []
   },
 
   actions: {
@@ -18,12 +19,20 @@ const store = {
       })
 
       context.commit('setMovies', moviesData.data)
+    },
+    async fetchGenres(context) {
+      const genreData = await MovieService.getGenres()
+
+      context.commit('setGenres', genreData.data)
     }
   },
 
   mutations: {
     setMovies(state, moviesData) {
       state.movies = moviesData.results
+    },
+    setGenres(state, genresData) {
+      state.genres = genresData.genres
     }
   },
 
