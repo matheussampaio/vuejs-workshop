@@ -3,6 +3,7 @@
 
     <div class="container">
       <h1>My movies backlog</h1>
+      <p>{{message}}</p>
     </div>
 
     <movie-nav/>
@@ -13,8 +14,10 @@
 
       <div class="row movie-container">
 
-        <div class="col-xs-12 col-sm-6 col-lg-3">
-          <movie-card :id="1"/>
+        <div v-for="movie in movies"
+          :key="movie.index"
+          class="col-xs-12 col-sm-6 col-lg-3">
+          <movie-card v-bind="movie"/>
         </div>
 
       </div>
@@ -37,6 +40,17 @@ export default {
     MovieNav,
     Pagination,
     MovieFilter
+  },
+  computed: {
+    message() {
+      return this.$store.state.hello
+    },
+    movies() {
+      return this.$store.getters.moviesCards
+    }
+  },
+  mounted() {
+    this.$store.dispatch('fetchMovies')
   }
 }
 </script>
