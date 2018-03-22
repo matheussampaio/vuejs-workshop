@@ -12,7 +12,7 @@
 
       <movie-filter/>
 
-      <div class="row movie-container">
+      <div class="row movie-container" :class="{'loading': loading}">
 
         <div v-for="movie in movies"
           :key="movie.index"
@@ -47,6 +47,9 @@ export default {
     },
     movies() {
       return this.$store.getters.moviesCards
+    },
+    loading() {
+      return this.$store.state.loading
     }
   },
   mounted() {

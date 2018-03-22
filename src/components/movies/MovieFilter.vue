@@ -3,7 +3,7 @@
     <button class="btn btn-secondary dropdown-toggle"
       type="button"
       @click="open=!open">
-      {{filterText}}
+      {{selectedGenreName}}
     </button>
     <div :class="{'dropdown-menu':true, 'show':open}">
       <a class="dropdown-item" href="#"
@@ -24,23 +24,23 @@
 export default {
   data () {
     return {
-      open: false,
-      selectedGenreName: null
+      open: false
     }
   },
 
   computed: {
-    filterText () {
-      return this.selectedGenreName || 'Viewing all genres'
-    },
     genres() {
       return this.$store.state.genres
+    },
+    selectedGenreName() {
+      return this.$store.getters.selectedGenreName || 'Viewing all genres'
     }
   },
 
   methods: {
-    onFilterClick (genre) {
-      // TODO filter movies
+    onFilterClick(genreId) {
+      this.$store.dispatch('filterMovies', genreId)
+
       this.open = false
     }
   },

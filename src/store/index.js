@@ -8,22 +8,32 @@ const store = {
   state: {
     hello: 'world',
     movies: [],
-    genres: []
+    genres: [],
+    selectedGenre: null,
+    loading: true
   },
 
   actions: {
     async fetchMovies(context) {
+      context.commit('setLoading', true)
+
       const moviesData = await MovieService.getMovies({
         page: 1,
-        genre: null
+        genre: context.state.selectedGenre
       })
 
       context.commit('setMovies', moviesData.data)
+      context.commit('setLoading', false)
     },
     async fetchGenres(context) {
       const genreData = await MovieService.getGenres()
 
       context.commit('setGenres', genreData.data)
+    },
+    filterMovies(context, genreId) {
+      context.commit('setGenre', genreId)
+
+      context.dispatch('fetchMovies')
     }
   },
 
@@ -33,6 +43,12 @@ const store = {
     },
     setGenres(state, genresData) {
       state.genres = genresData.genres
+    },
+    setGenre(state, genreId) {
+      state.selectedGenre = genreId
+    },
+    setLoading(state, value) {
+      state.loading = value
     }
   },
 
@@ -47,6 +63,11 @@ const store = {
         description: movie.overview,
         voteAverage: movie.vote_average
       }))
+    },
+    selectedGenreName(state) {
+      const genre = state.genres.find(genre => genre.id === state.selectedGenre)
+
+      return genre ? genre.name : null
     }
   }
 }
