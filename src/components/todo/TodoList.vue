@@ -1,7 +1,9 @@
 <template>
   <ul class="list-group">
     <li v-for="(task, index) in tasks" :key="index" class="list-group-item">
-      {{ task.description }} - {{ task.isDone ? 'done' : 'pending' }}
+      <span>
+        {{ task.description }} - {{ task.isDone ? 'done' : 'pending' }}
+      </span>
       <button class="btn btn-sm btn-danger float-right"
         @click="remove(task)">
         remove
