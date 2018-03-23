@@ -7,7 +7,8 @@ Vue.use(VueRouter)
 
 const routes = [
   { path: '/', component: TodoPage },
-  { path: '/movies', component: MoviePage }
+  { path: '/movies', component: MoviePage },
+  { path: '/movies/backlog', component: MoviePage }
 ]
 
 export default new VueRouter({

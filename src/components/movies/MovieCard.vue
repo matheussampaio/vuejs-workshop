@@ -19,7 +19,7 @@
         class="btn btn-primary save-btn">
         Add to backlog
       </a>
-      <a v-else href="#" @click.prevent="removeSavedMovie(movieObject)"
+      <a v-else href="#" @click.prevent="removeMovie(movieObject)"
         class="btn btn-danger save-btn">
         Remove
       </a>
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import MovieCardVoteAverage from './MovieCardVoteAverage'
 
 export default {
@@ -74,8 +75,7 @@ export default {
       return this.image
     },
     saved () {
-      // TODO check if movie is saved
-      return false
+      return this.$store.state.savedMovies.some(movie => movie.id === this.id)
     },
     movieObject () {
       // We don't save vote_average because it may change
@@ -89,12 +89,10 @@ export default {
   },
 
   methods: {
-    saveMovie () {
-      // TODO add movie to saved
-    },
-    removeSavedMovie (movieObject) {
-      // TODO remove saved movie
-    }
+    ...mapActions({
+      saveMovie: 'saveMovie',
+      removeMovie: 'removeMovie'
+    })
   }
 }
 </script>

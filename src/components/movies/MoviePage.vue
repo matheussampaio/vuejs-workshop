@@ -3,18 +3,17 @@
 
     <div class="container">
       <h1>My movies backlog</h1>
-      <p>{{message}}</p>
     </div>
 
     <movie-nav/>
 
     <div class="container">
 
-      <movie-filter/>
+      <movie-filter v-if="!isBacklog"/>
 
       <div class="row movie-container" :class="{'loading': loading}">
 
-        <div v-for="movie in movies"
+        <div v-for="movie in currentMovies"
           :key="movie.index"
           class="col-xs-12 col-sm-6 col-lg-3">
           <movie-card v-bind="movie"/>
@@ -22,7 +21,7 @@
 
       </div>
 
-      <pagination />
+      <pagination v-if="!isBacklog"/>
 
     </div>
   </div>
@@ -33,27 +32,35 @@ import MovieCard from './MovieCard'
 import MovieNav from './MovieNav'
 import Pagination from './Pagination'
 import MovieFilter from './MovieFilter'
+import isBacklogMixin from '../../mixins/isBacklogMixin'
 
 export default {
+  ...isBacklogMixin,
+
   components: {
     MovieCard,
     MovieNav,
     Pagination,
     MovieFilter
   },
-  computed: {
-    message() {
-      return this.$store.state.hello
-    },
+
+computed: {
     movies() {
       return this.$store.getters.moviesCards
     },
     loading() {
       return this.$store.state.loading
+    },
+    isBacklog() {
+      return this.$route.path === '/movies/backlog'
+    },
+    currentMovies() {
+      return this.isBacklog ? this.$store.state.savedMovies : this.movies
     }
   },
   mounted() {
     this.$store.dispatch('fetchMovies')
+    this.$store.dispatch('fetchSavedMovies')
   }
 }
 </script>

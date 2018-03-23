@@ -8,6 +8,7 @@
 <script>
 import Navbar from './components/Navbar'
 import TodoPage from './components/todo/TodoPage'
+
 export default {
   name: 'App',
   components: {
